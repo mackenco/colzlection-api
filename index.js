@@ -30,7 +30,14 @@ app.post('/', function(req, res) {
   entry.date = new Date();
   sites.push(entry);
   fs.writeFile('sites.json', JSON.stringify(sites, null, 4), function(e) {
-    e ? console.log(e) : res.json(entry);
+    e ? console.log(e) : res.sendStatus(200);
+  });
+});
+
+app.delete('/', function(req, res) {
+  if (sites.length > 0) { sites.pop(); }
+  fs.writeFile('sites.json', JSON.stringify(sites, null, 4), function(e) {
+    e ? console.log(e) : res.sendStatus(200);
   });
 });
 
