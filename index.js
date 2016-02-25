@@ -28,6 +28,7 @@ app.post('/', function(req, res) {
     var entry = {};
     var parsed = url.parse(req.body.url);
     entry.url = parsed.protocol + "//" + parsed.hostname + parsed.pathname;
+    entry.title = req.body.title;
     entry.host = parsed.hostname; 
     entry.finished = req.body.finished;
     entry.date = new Date();
