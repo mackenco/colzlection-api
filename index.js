@@ -22,20 +22,18 @@ app.get('/', function(req, res) {
 });
 
 app.post('/', function(req, res) {
-  var entry = {};
-  var parsed = url.parse(req.body.url);
-  entry.url = parsed.protocol + "//" + parsed.hostname + parsed.pathname;
-  entry.host = parsed.hostname; 
-  entry.finished = req.body.finished;
-  entry.date = new Date();
-  sites.push(entry);
-  fs.writeFile('sites.json', JSON.stringify(sites, null, 4), function(e) {
-    e ? console.log(e) : res.sendStatus(200);
-  });
-});
+  if (req.query.pop && sites.length > 0) {
+    sites.pop();
+  } else {
+    var entry = {};
+    var parsed = url.parse(req.body.url);
+    entry.url = parsed.protocol + "//" + parsed.hostname + parsed.pathname;
+    entry.host = parsed.hostname; 
+    entry.finished = req.body.finished;
+    entry.date = new Date();
+    sites.push(entry);
+  }
 
-app.delete('/', function(req, res) {
-  if (sites.length > 0) { sites.pop(); }
   fs.writeFile('sites.json', JSON.stringify(sites, null, 4), function(e) {
     e ? console.log(e) : res.sendStatus(200);
   });
