@@ -1,6 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var url = require('url');
+var pg = require('pg');
 var fs = require('fs');
 var contents = fs.readFileSync('sites.json');
 var sites = JSON.parse(contents);
@@ -18,7 +19,17 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
 app.get('/', function(req, res) {
-  res.json(sites);
+  pg.connect(provess.env.DATABASE_URL, function(err, client, done) {
+    client.query('SELECT * FROM test_table', function(err, result) {
+      done();
+      if (err) {
+        console.error(err);
+        res.send("Error " + err); 
+      } else {
+        res.render('pages/db', { results: result.rows }); 
+      } 
+    }); 
+  });
 });
 
 app.post('/', function(req, res) {
