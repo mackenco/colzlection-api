@@ -55,9 +55,9 @@ app.get('/', function(req, res) {
 
       freq[r.host] = freq[r.host] ? freq[r.host] += 1 : freq[r.host] = 1;
     });
+    var sorted = _.sortBy(freq, function(key) { return key; }).reverse();
     if (!err) {
-      // res.json(result);
-      res.render('pages/index', { articles: output, frequency: freq });
+      res.render('pages/index', { articles: output, frequency: sorted});
     } else {
       res.end('Error:' + err);
     } 
