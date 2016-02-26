@@ -10,7 +10,11 @@
     "body-parser": "^1.15.0",
     "ejs": "2.3.3",
     "express": "4.13.3",
-    "pg": "^4.5.1"
+    "mongoose": "^4.4.5",
+    "pg": "^4.5.1",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^3.19.3",
+    "sequelize-cli": "^2.3.1"
   },
   "engines": {
     "node": "0.12.7"
