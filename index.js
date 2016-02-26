@@ -72,7 +72,7 @@ var a4 = new Article ({
 a4.save(function (err) {if (err) console.log ('Error on save!');});
 
 app.get('/', function(req, res) {
-  Article.find({}).exect(function(err, result) {
+  Article.find({}).exec(function(err, result) {
     if (!err) {
       res.json(result); 
     } else {
