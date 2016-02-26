@@ -12,7 +12,16 @@
   </div>
 
   <div class="container">
-    <div class="row">
+    <script>
+      function toggle() {
+          $("#articles").toggleClass("hidden");
+          $("#frequency").toggleClass("hidden");
+        };
+    </script>
+
+    <div class="row"><button type="button" onClick="toggle()" class="btn btn-info">Frequency</button></div>
+
+    <div class="row" id="articles">
       <table class="table table-condensed">
         <% articles.forEach(function(a) { %>
           <tr>
@@ -22,10 +31,8 @@
         <% }) %>
       </table>
     </div>
-  </div>
 
-  <div class="container">
-    <div class="row">
+    <div class="row hidden" id="frequency">
       <table class="table table-condensed">
         <% Object.keys(frequency).forEach(function(key) { %>
           <tr>
@@ -35,6 +42,7 @@
         <% }) %>
       </table>
     </div>
+
   </div>
 
 </body>
