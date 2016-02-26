@@ -48,7 +48,7 @@ app.get('/', function(req, res) {
     _.each(result, function(r) {
       var entry = {};
       entry.url = r.url;
-      entry.title = unescape(r.title);
+      entry.title = unescape(r.title).replace(/\+/g, ' ');
       var d = new Date(r.created_at);
       entry.date = r.created_at ? ((d.getUTCMonth()+1) + '/' + d.getUTCDate() + '/' + d.getUTCFullYear()) : 'No Date';
       output.push(entry);
