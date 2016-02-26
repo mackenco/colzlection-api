@@ -34,10 +34,10 @@
 
     <div class="row hidden" id="frequency">
       <table class="table table-condensed">
-        <% Object.keys(frequency).forEach(function(key) { %>
+        <% frequency.forEach(function(site) { %>
           <tr>
-            <td><%= key %></td>
-            <td><%= frequency[key] %></td>
+            <td><%= site.key %></td>
+            <td><%= site.value %></td>
           </tr>
         <% }) %>
       </table>

@@ -55,7 +55,7 @@ app.get('/', function(req, res) {
 
       freq[r.host] = freq[r.host] ? freq[r.host] += 1 : freq[r.host] = 1;
     });
-    var sorted = _.sortBy(freq, function(key) { return key; }).reverse();
+    var sorted = sortObject(freq).reverse();
     if (!err) {
       res.render('pages/index', { articles: output, frequency: sorted});
     } else {
@@ -83,4 +83,19 @@ app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
 });
 
-
+function sortObject(obj) {
+    var arr = [];
+    var prop;
+    for (prop in obj) {
+      if (obj.hasOwnProperty(prop)) {
+        arr.push({
+          'key': prop,
+          'value': obj[prop]
+        });
+      }
+    }
+    arr.sort(function(a, b) {
+    return a.value - b.value;
+  });
+  return arr;
+}
