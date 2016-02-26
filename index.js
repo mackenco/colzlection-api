@@ -41,9 +41,10 @@ var articleSchema = new mongoose.Schema({
 var Article = mongoose.model('Articles', articleSchema);
 
 app.get('/', function(req, res) {
-  Article.find({}).exec(function(err, result) {
+  Article.find({}).sort('-created_at').exec(function(err, result) {
     if (!err) {
-      res.json(result); 
+      // res.json(result);
+      res.render('pages/index', {articles: result});
     } else {
       res.end('Error:' + err);
     } 
