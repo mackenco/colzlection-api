@@ -14,12 +14,25 @@
   <div class="container">
     <div class="row">
       <table class="table table-condensed">
-        <% for(var i=0; i < articles.length; i++) { %>
+        <% articles.forEach(function(a) { %>
           <tr>
-            <td><a href="<%=articles[i].url%>" target="_blank"><%= articles[i].title %></a></td>
-            <td><%= articles[i].created_at %></td>
+            <td><a href="<%=a.url%>" target="_blank"><%= a.title %></a></td>
+            <td><%= a.date %></td>
           </tr>
-        <% } %>
+        <% }) %>
+      </table>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <table class="table table-condensed">
+        <% Object.keys(frequency).forEach(function(key) { %>
+          <tr>
+            <td><%= key %></td>
+            <td><%= frequency[key] %></td>
+          </tr>
+        <% }) %>
       </table>
     </div>
   </div>

@@ -2,6 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var url = require('url');
 var mongoose = require('mongoose');
+var _ = require('underscore');
 var app = express();
 
 app.set('port', (process.env.PORT || 5000));
@@ -42,9 +43,21 @@ var Article = mongoose.model('Articles', articleSchema);
 
 app.get('/', function(req, res) {
   Article.find({}).sort('-created_at').exec(function(err, result) {
+    var output = [], freq = {};
+
+    _.each(result, function(r) {
+      var entry = {};
+      entry.url = r.url;
+      entry.title = unescape(r.title);
+      var d = new Date(r.created_at);
+      entry.date = r.created_at ? ((d.getUTCMonth()+1) + '/' + d.getUTCDate() + '/' + d.getUTCFullYear()) : 'No Date';
+      output.push(entry);
+
+      freq[r.host] = freq[r.host] ? freq[r.host] += 1 : freq[r.host] = 1;
+    });
     if (!err) {
       // res.json(result);
-      res.render('pages/index', {articles: result});
+      res.render('pages/index', { articles: output, frequency: freq });
     } else {
       res.end('Error:' + err);
     } 
