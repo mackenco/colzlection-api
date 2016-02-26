@@ -2,9 +2,6 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var url = require('url');
 var pg = require('pg');
-var fs = require('fs');
-var contents = fs.readFileSync('sites.json');
-var sites = JSON.parse(contents);
 var app = express();
 
 app.set('port', (process.env.PORT || 5000));
@@ -33,8 +30,7 @@ app.get('/', function(req, res) {
 });
 
 app.post('/', function(req, res) {
-  if (req.query.pop && sites.length > 0) {
-    sites.pop();
+  if (req.query.pop) {
   } else {
     var entry = {};
     var parsed = url.parse(req.body.url);
@@ -43,12 +39,7 @@ app.post('/', function(req, res) {
     entry.host = parsed.hostname; 
     entry.finished = req.body.finished;
     entry.date = new Date();
-    sites.push(entry);
   }
-
-  fs.writeFile('sites.json', JSON.stringify(sites, null, 4), function(e) {
-    e ? console.log(e) : res.sendStatus(200);
-  });
 });
 
 app.listen(app.get('port'), function() {
