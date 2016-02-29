@@ -16,10 +16,11 @@
       function toggle() {
           $("#articles").toggleClass("hidden");
           $("#frequency").toggleClass("hidden");
+          $("#chart").toggleClass("hidden");
         };
     </script>
 
-    <div class="row"><button type="button" onClick="toggle()" class="btn btn-info">Frequency</button></div>
+    <div class="row" style="margin-bottom:5px;"><button type="button" onClick="toggle()" class="btn btn-info">Frequency</button></div>
 
     <div class="row" id="articles">
       <table class="table table-condensed">
@@ -32,11 +33,12 @@
       </table>
     </div>
 
+    <div class="row hidden" id="chart"><% include ../partials/chart.ejs %></div>
     <div class="row hidden" id="frequency">
       <table class="table table-condensed">
-        <% frequency.forEach(function(site) { %>
+        <% JSON.parse(frequency).forEach(function(site) { %>
           <tr>
-            <td><%= site.key %></td>
+            <td><%= site.name %></td>
             <td><%= site.value %></td>
           </tr>
         <% }) %>

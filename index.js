@@ -57,7 +57,7 @@ app.get('/', function(req, res) {
     });
     var sorted = sortObject(freq).reverse();
     if (!err) {
-      res.render('pages/index', { articles: output, frequency: sorted});
+      res.render('pages/index', { articles: output, frequency: JSON.stringify(sorted)});
     } else {
       res.end('Error:' + err);
     } 
@@ -69,7 +69,7 @@ app.post('/', function(req, res) {
   var parsed = url.parse(req.body.url);
   entry.url = parsed.protocol + "//" + parsed.hostname + parsed.pathname;
   entry.title = req.body.title;
-  entry.host = parsed.hostname.match(/(www\.)?(.+)/).pop();
+  entry.host = parsed.hostname.match(/([\w\d]+)?\.\w+$/).pop();
   entry.finished = req.body.finished;
   entry.created_at = new Date();
 
@@ -89,7 +89,7 @@ function sortObject(obj) {
     for (prop in obj) {
       if (obj.hasOwnProperty(prop)) {
         arr.push({
-          'key': prop,
+          'name': prop,
           'value': obj[prop]
         });
       }
